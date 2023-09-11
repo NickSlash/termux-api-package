@@ -1,0 +1,53 @@
+#!@TERMUX_PREFIX@/bin/sh
+set -e -u
+
+SCRIPTNAME=termux-settings
+show_usage () {
+    echo "usage: $SCRIPTNAME list   <table>"
+    echo "       $SCRIPTNAME get    <table> <key>"
+    echo "       $SCRIPTNAME put    <table> <key> <value>"
+    echo "       $SCRIPTNAME delete <table> <key>"
+    echo " valid <table> : system, secure, global"
+    exit 0
+}
+
+PARAMS=""
+
+if [ $# -eq 0 ]; then
+    show_usage;
+fi
+
+if [ $1 = "list" ]; then
+    if [ $# -eq 2 ]; then
+        @TERMUX_PREFIX@/libexec/termux-api Settings --es method "list" --es table "$2"
+    else
+        show_usage
+    fi
+    exit 0
+fi
+
+if [ $1 = "get" ]; then
+    if [ $# = 3 ]; then
+        @TERMUX_PREFIX@/libexec/termux-api Settings --es method "get" --es table "$2" --es key "$3"
+    else
+        show_usage
+    fi
+    exit 0
+fi
+
+if [ $1 = "put" ]; then
+    if [ $# == 4 ]; then
+        @TERMUX_PREFIX@/libexec/termux-api Settings --es method "put" --es table "$2" --es key "$3" --es value "$4"
+        show_usage
+    fi
+    exit 0
+fi
+
+if [ $1 = "delete" ]; then
+    if [ $# == 3 ]; then
+        @TERMUX_PREFIX@/libexec/termux-api Settings --es method "delete" --es table "$2" --es key "$3"
+    else
+        show_usage
+    fi
+    exit 0
+fi

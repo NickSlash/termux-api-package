@@ -48,6 +48,7 @@ set(script_files
   scripts/termux-saf-stat
   scripts/termux-saf-write
   scripts/termux-sensor
+  scripts/termux-settings
   scripts/termux-share
   scripts/termux-sms-inbox
   scripts/termux-sms-list
