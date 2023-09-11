@@ -27,7 +27,7 @@ if [ $1 = "list" ]; then
 fi
 
 if [ $1 = "get" ]; then
-    if [ $# = 3 ]; then
+    if [ $# -eq 3 ]; then
         @TERMUX_PREFIX@/libexec/termux-api Settings --es method "get" --es table "$2" --es key "$3"
     else
         show_usage
@@ -36,7 +36,7 @@ if [ $1 = "get" ]; then
 fi
 
 if [ $1 = "put" ]; then
-    if [ $# == 4 ]; then
+    if [ $# -eq 4 ]; then
         @TERMUX_PREFIX@/libexec/termux-api Settings --es method "put" --es table "$2" --es key "$3" --es value "$4"
         show_usage
     fi
@@ -44,7 +44,7 @@ if [ $1 = "put" ]; then
 fi
 
 if [ $1 = "delete" ]; then
-    if [ $# == 3 ]; then
+    if [ $# -eq 3 ]; then
         @TERMUX_PREFIX@/libexec/termux-api Settings --es method "delete" --es table "$2" --es key "$3"
     else
         show_usage
