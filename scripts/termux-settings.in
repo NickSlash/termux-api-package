@@ -13,7 +13,7 @@ show_usage () {
 
 PARAMS=""
 
-if [ $# -eq 0 ]; then
+if [ $# -lt 2 ]; then
     show_usage;
 fi
 
