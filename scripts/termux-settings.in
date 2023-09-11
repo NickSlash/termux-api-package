@@ -1,6 +1,5 @@
 #!@TERMUX_PREFIX@/bin/sh
 set -e -u
-
 SCRIPTNAME=termux-settings
 show_usage () {
     echo "usage: $SCRIPTNAME list   <table>"
@@ -8,46 +7,34 @@ show_usage () {
     echo "       $SCRIPTNAME put    <table> <key> <value>"
     echo "       $SCRIPTNAME delete <table> <key>"
     echo " valid <table> : system, secure, global"
-    exit 0
+    exit 0    
 }
-
-PARAMS=""
 
 if [ $# -lt 2 ]; then
     show_usage;
-fi
-
-if [ $1 = "list" ]; then
-    if [ $# -eq 2 ]; then
+elif [ $# -eq 2 ]; then
+    if [ $1 = "list" ]; then
         @TERMUX_PREFIX@/libexec/termux-api Settings --es method "list" --es table "$2"
+        exit 0;
     else
-        show_usage
+        show_usage;
     fi
-    exit 0
-fi
-
-if [ $1 = "get" ]; then
-    if [ $# -eq 3 ]; then
+elif [ $# -eq 3 ]; then
+    if [ $1 = "get" ]; then
         @TERMUX_PREFIX@/libexec/termux-api Settings --es method "get" --es table "$2" --es key "$3"
-    else
-        show_usage
+        exit 0;
     fi
-    exit 0
-fi
-
-if [ $1 = "put" ]; then
-    if [ $# -eq 4 ]; then
-        @TERMUX_PREFIX@/libexec/termux-api Settings --es method "put" --es table "$2" --es key "$3" --es value "$4"
-        show_usage
-    fi
-    exit 0
-fi
-
-if [ $1 = "delete" ]; then
-    if [ $# -eq 3 ]; then
+    if [ $1 = "delete" ]; then
         @TERMUX_PREFIX@/libexec/termux-api Settings --es method "delete" --es table "$2" --es key "$3"
-    else
-        show_usage
+        exit 0;
     fi
-    exit 0
+    show_usage;
+elif [ $# -eq 4 ]; then
+    if [ $1 = "put" ]; then
+        @TERMUX_PREFIX@/libexec/termux-api Settings --es method "put" --es table "$2" --es key "$3" --es value "$4"
+        exit 0;
+    fi
+    show_usage;
+else
+    show_usage;
 fi
