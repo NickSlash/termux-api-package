@@ -8,7 +8,7 @@ show_usage () {
 	echo
 	echo "Usage: $SCRIPTNAME [method] [namespace] [key] [value]"
 	echo "method - help"
-        echo "       - > display this message
+        echo "       - > display this message"
 	echo "       - list   <namespace>"
  	echo "       - > list all key=value for a namespace"
         echo "       - get    <namespace> <key>"
