@@ -1,12 +1,39 @@
-#!@TERMUX_PREFIX@/bin/sh
+#!@TERMUX_PREFIX@/bin/bash
+
 set -e -u
 
 SCRIPTNAME=termux-settings
+show_usage () {
+	echo "Change Settings on your device"
+	echo
+	echo "Usage: $SCRIPTNAME [method] [namespace] [key] [value]"
+	echo "method - help"
+        echo "       - > display this message
+	echo "       - list   <namespace>"
+ 	echo "       - > list all key=value for a namespace"
+        echo "       - get    <namespace> <key>"
+	echo "       - > return value for key in namespace"
+        echo "       - delete <namespace> <key>"
+	echo "       - > remove key from namespace"
+        echo "       - put    <namespace> <key> <value>"
+	echo "       - > add key=value to namespace"
+	echo "namespace - SYSTEM, SECURE, GLOBAL"
+	echo "key       - any non-empty string"
+	echo "value     - any string"
+}
 
 METHOD=$1
-TABLE=$2
+METHOD=${METHOD,,}
+NAMESPACE=$2
+NAMESPACE=${NAMESPACE,,}
 KEY=$3
+KEY=${TABLE,,}
 VALUE=$4
 
-@TERMUX_PREFIX@/libexec/termux-api Settings --es name "$SCRIPTNAME" --es method "$METHOD" --es table "$TABLE" --es key "$KEY" --es value "$VALUE"
+if [ $METHOD == "help" ]; then
+	show_usage;
+	exit 1;
+fi
+
+@TERMUX_PREFIX@/libexec/termux-api Settings --es method "$METHOD" --es namespace "$NAMESPACE" --es key "$KEY" --es value "$VALUE"
 exit 0;
